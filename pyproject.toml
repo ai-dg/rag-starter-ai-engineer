@@ -12,3 +12,8 @@ dependencies = [
     "uvicorn",
     "python-dotenv",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+]
