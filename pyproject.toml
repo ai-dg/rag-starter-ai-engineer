@@ -1,0 +1,14 @@
+[project]
+name = "formation-rag"
+version = "0.1.0"
+description = "POC chatbot RAG sur les contenus de formation"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain",
+    "langchain-openai",
+    "langchain-community",
+    "chromadb",
+    "fastapi",
+    "uvicorn",
+    "python-dotenv",
+]
