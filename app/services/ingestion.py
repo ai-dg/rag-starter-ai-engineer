@@ -180,7 +180,10 @@ def load_docs():
 def get_embedding(settings: Settings):
 
     if settings.llm_provider == "openai":
-        embedding = OpenAIEmbeddings(model=settings.embedding_model)
+        embedding = OpenAIEmbeddings(
+            model=settings.embedding_model,
+            api_key=settings.openai_api_key,
+         )
         return embedding
     if settings.llm_provider == "ollama":
         embedding = OllamaEmbeddings(

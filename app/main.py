@@ -15,12 +15,3 @@ configure_logging()
 app = FastAPI(title="Formation Assistant RAG")
 
 app.include_router(router)
-
-
-# @app.on_event("startup")
-# def startup():
-#     global vectorstore, llm
-#     print("demarrage du serveur")
-#     vectorstore = build_index()
-#     llm = ChatOpenAI(model=CHAT_MODEL, temperature=0)
-#     print("serveur pret")

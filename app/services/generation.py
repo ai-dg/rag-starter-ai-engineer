@@ -31,6 +31,7 @@ def get_chat_model(settings: Settings):
     if settings.llm_provider == "openai":
         model = ChatOpenAI(
             model=settings.chat_model,
+            api_key=settings.openai_api_key,
             temperature=0,
         )
         return model
