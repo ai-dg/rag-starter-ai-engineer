@@ -88,3 +88,10 @@ Ce que le collègue avait lui-même noté avant de passer à autre chose :
 ## Rendu
 
 Fork ce repo (ou crée un repo à partir de son contenu) et travaille sur ta copie. Les modalités de rendu sont détaillées dans [CONSIGNES.md](CONSIGNES.md).
+
+
+# Ameliorations possibles
+
+- Dependance d'une cle payante API, realiser les embeddings en local `qwen2.5-coder` pour remplacer le `text-embedding-3-small` et `gemma4` a la place de `gpt-4o-mini`. Ces changements cest pour avoir quelque chose de comparable au POC initiale.
+
+

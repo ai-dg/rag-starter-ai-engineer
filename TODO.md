@@ -1,8 +1,8 @@
 # TODO — Test technique AI Engineer
 
 ## 0. Cadrage
-- [ ] Vérifier que le POC original (`app.py`) démarre.
-- [ ] `.gitignore` / `.dockerignore` à jour (`.env`, `.venv`, `__pycache__`, index vectoriel local).
+- [x] Vérifier que le POC original (`app.py`) démarre.
+- [x] `.gitignore` / `.dockerignore` à jour (`.env`, `.venv`, `__pycache__`, index vectoriel local).
 
 ## 1. Architecture (`app/`)
 - [ ] `main.py` : instancier FastAPI, monter le router.
