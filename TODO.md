@@ -25,7 +25,7 @@
 
 ## 4. API + observabilité
 - [x] `GET /health`.
-- [x] Validation des entrées de `/ask`, codes HTTP cohérents.
+- [x] Validation des entrées de `/query`, codes HTTP cohérents.
 - [x] Logs structurés — décider quoi logger et où.
 
 ## 5. Tests (au moins 2, pytest)
@@ -33,21 +33,10 @@
 - [x] Mocker ce qui appelle OpenAI/Chroma.
 
 ## 6. Dockerfile
-- [ ] Au moins 3 améliorations, chacune justifiable à l'oral.
-- [ ] Vérifier `docker build` + `docker run` + `/health` après coup.
+- [x] Au moins 3 améliorations, chacune justifiable à l'oral.
+- [x] Vérifier `docker build` + `docker run` + `/health` après coup.
 
 ## 7. README
-- [ ] Architecture et rôle de chaque module.
-- [ ] Installation (local + Docker).
-- [ ] Section **Arbitrages** : ce que j'ai choisi, ce que j'ai écarté, ce que je n'ai pas eu le temps de faire.
-
-## 8. Slides + vidéo
-- [ ] 5-10 slides, public débutant : "Guardrails et observabilité pour un RAG en prod".
-- [ ] Vidéo 5-7 min, script écrit, répétée avant enregistrement.
-
-## Point d'arrêt minimal (ne pas dépasser sans que ça marche)
-- [ ] `docker compose up` (ou build+run) fonctionne.
-- [ ] Une question dans le sujet répond correctement.
-- [ ] Une question hors sujet déclenche le guardrail.
-- [ ] Les tests passent.
-- [ ] Le README explique mes choix.
+- [x] Architecture et rôle de chaque module.
+- [x] Installation (local + Docker).
+- [x] Section **Arbitrages** : ce que j'ai choisi, ce que j'ai écarté, ce que je n'ai pas eu le temps de faire.
