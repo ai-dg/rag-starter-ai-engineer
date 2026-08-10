@@ -12,9 +12,14 @@ dependencies = [
     "uvicorn",
     "python-dotenv",
     "pypdf>=6.15.0",
+    "langchain-ollama>=1.1.0",
+    "langchain-chroma>=1.1.0",
 ]
 
 [dependency-groups]
 dev = [
     "black>=26.5.1",
+    "pytest>=9.1.1",
 ]
+[tool.pytest.ini_options]
+pythonpath = ["."]
