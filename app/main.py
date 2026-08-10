@@ -17,7 +17,6 @@ app = FastAPI(title="Formation Assistant RAG")
 app.include_router(router)
 
 
-
 # @app.on_event("startup")
 # def startup():
 #     global vectorstore, llm

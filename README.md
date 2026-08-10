@@ -92,7 +92,7 @@ Fork ce repo (ou crée un repo à partir de son contenu) et travaille sur ta cop
 
 # Arbitrages
 
-- Dependance d'une cle payante API, realiser les embeddings en local `qwen2.5-coder` pour remplacer le `text-embedding-3-small` et `gemma4` a la place de `gpt-4o-mini`. Ces changements cest pour avoir quelque chose de comparable au POC initiale.
+- Dependance d'une cle payante API, realiser les embeddings en local `qwen3-embedding` pour remplacer le `text-embedding-3-small` et `gemma4` a la place de `gpt-4o-mini`. Ces changements cest pour avoir quelque chose de comparable au POC initiale.
 
 - Variables pydantic codees en dur, amelioration realisee dans config.py en liaison avec la variable d'environnement .env (DOCS_DIR, CHUNK_SIZE, TOP_K, EMBEDDING_MODEL, CHAT_MODEL, SYSTEM_PROMPT). Verifications de chaque variables d'envionnement et une gestion propre des variables non-hardcoding
 
@@ -105,3 +105,5 @@ Pour les chunks, j'ai choisi 500 avec un overlap de 100. les documents presents 
 
 Pas de temps pour traiter les formats non-supportes (.docx, etc.)
 Pas de temps pour tratier la limitation de taille des fichiers
+
+Chroma avec dossier persistent,  l'index est recalculé à chaque démarrage, pas de rechargement incrémental — accepté pour tenir le budget temps

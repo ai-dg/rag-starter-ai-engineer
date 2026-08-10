@@ -9,28 +9,28 @@
 - [x] `config.py` : centraliser les paramètres (modèles, chemins, taille de chunk, top_k, seuil...).
 - [x] `schemas.py` : requêtes/réponses Pydantic.
 - [x] `api/routes.py` : uniquement l'orchestration HTTP.
-- [ ] `services/ingestion.py`, `retrieval.py`, `generation.py` : logique métier.
-- [ ] Décider quoi faire de l'ancien `app.py` (garder en compat, ou supprimer).
+- [x] `services/ingestion.py`, `retrieval.py`, `generation.py` : logique métier.
+- [x] Décider quoi faire de l'ancien `app.py` (garder en compat, ou supprimer).
 
 ## 2. Ingestion
-- [ ] Multi-format (`.md`, `.txt`, `.pdf`).
-- [ ] Validation des entrées + gestion d'erreur (fichier vide, illisible, dossier absent).
-- [ ] Métadonnées utiles par chunk.
-- [ ] Stratégie de chunking — **à choisir**
+- [x] Multi-format (`.md`, `.txt`, `.pdf`).
+- [x] Validation des entrées + gestion d'erreur (fichier vide, illisible, dossier absent).
+- [x] Métadonnées utiles par chunk.
+- [x] Stratégie de chunking — **Langchain**
 
 ## 3. Retrieval + guardrail + génération
-- [ ] Retrieval : top_k, scores, métadonnées.
-- [ ] Guardrail — **choix à faire et à justifier** (voir tableau d'options dans `CONSIGNES.md`).
-- [ ] Génération : prompt contraint au contexte, gestion du "je ne sais pas", sources citées.
+- [x] Retrieval : top_k, scores, métadonnées.
+- [x] Guardrail — **Seuil=0.9** (voir tableau d'options dans `CONSIGNES.md`).
+- [x] Génération : prompt contraint au contexte, gestion du "je ne sais pas", sources citées.
 
 ## 4. API + observabilité
-- [ ] `GET /health`.
-- [ ] Validation des entrées de `/ask`, codes HTTP cohérents.
-- [ ] Logs structurés — décider quoi logger et où.
+- [x] `GET /health`.
+- [x] Validation des entrées de `/ask`, codes HTTP cohérents.
+- [x] Logs structurés — décider quoi logger et où.
 
 ## 5. Tests (au moins 2, pytest)
-- [ ] Identifier les 2 comportements les plus importants à couvrir sans coût API.
-- [ ] Mocker ce qui appelle OpenAI/Chroma.
+- [x] Identifier les 2 comportements les plus importants à couvrir sans coût API.
+- [x] Mocker ce qui appelle OpenAI/Chroma.
 
 ## 6. Dockerfile
 - [ ] Au moins 3 améliorations, chacune justifiable à l'oral.
