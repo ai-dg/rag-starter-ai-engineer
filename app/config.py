@@ -25,8 +25,9 @@ class Settings(BaseSettings):
     embedding_model_local: str | None = None
     chat_model_local: str | None = None
 
-    docs_dir: str 
+    docs_dir: str | None = None
     chunk_size: int
+    chunk_overlap: int
     top_k: int
     system_prompt: str
 
@@ -62,5 +63,10 @@ class Settings(BaseSettings):
                 raise ValueError(
                     "CHAT_MODEL_LOCAL is mandatory " "with LLM_PROVIDER=ollama"
                 )
+
+        if self.docs_dir is None:
+            raise ValueError(
+                "DOCS_DIR is mandatory"
+            )
 
         return self

@@ -5,10 +5,10 @@
 - [x] `.gitignore` / `.dockerignore` à jour (`.env`, `.venv`, `__pycache__`, index vectoriel local).
 
 ## 1. Architecture (`app/`)
-- [ ] `main.py` : instancier FastAPI, monter le router.
+- [x] `main.py` : instancier FastAPI, monter le router.
 - [x] `config.py` : centraliser les paramètres (modèles, chemins, taille de chunk, top_k, seuil...).
 - [x] `schemas.py` : requêtes/réponses Pydantic.
-- [ ] `api/routes.py` : uniquement l'orchestration HTTP.
+- [x] `api/routes.py` : uniquement l'orchestration HTTP.
 - [ ] `services/ingestion.py`, `retrieval.py`, `generation.py` : logique métier.
 - [ ] Décider quoi faire de l'ancien `app.py` (garder en compat, ou supprimer).
 

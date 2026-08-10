@@ -49,49 +49,125 @@ This implementation improves the pipeline in four areas:
    - Keep the chunk size and overlap configurable.
 """
 
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import (
+    DirectoryLoader,
+    TextLoader,
+    PyPDFLoader,
+)
+
+from pathlib import Path
+import logging
+
+from app.config import Settings
+
+logger = logging.getLogger(__name__)
 
 
-# def load_docs():
-#     print("chargement des documents...")
-#     texts = []
-#     files = glob.glob(DOCS_DIR + "/*.md")
-#     for f in files:
-#         content = open(f).read()
-#         texts.append(content)
-#         print("ok ->", f)
-#     print(f"{len(texts)} fichiers charges")
-#     return texts
+def chunk_text(documents):
+    settings = Settings()
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=settings.chunk_size,
+        chunk_overlap=settings.chunk_overlap,
+    )
+
+    chunks = splitter.split_documents(documents)
+
+    if not chunks:
+        raise ValueError("No chunk could be generated from the documents")
+
+    return chunks
 
 
-# def chunk_text(text):
-#     chunks = []
-#     i = 0
-#     while i < len(text):
-#         chunks.append(text[i:i + CHUNK_SIZE])
-#         i = i + CHUNK_SIZE
-#     return chunks
+def verify_docs_path(docs_dir):
+    path = Path(docs_dir)
+
+    if not path.exists():
+        raise FileNotFoundError(f"Documents directory doesn't exist: {path}")
+    if not path.is_dir():
+        raise NotADirectoryError(f"Documents path is not a directry: {path}")
+
+    return path
 
 
-# def build_index():
-#     texts = load_docs()
+def check_document_content(document: Document):
 
-#     all_chunks = []
-#     for t in texts:
-#         for c in chunk_text(t):
-#             all_chunks.append(c)
+    content = (
+        document.page_content.replace("\x00", "")
+        .replace("\r\n", "\n")
+        .replace("\r", "\n")
+        .strip()
+    )
 
-#     print(f"{len(all_chunks)} chunks generes")
+    if not content:
+        logger.warning(
+            "Skipping document with empty content: source= %s, page=%s",
+            document.metadata.get("source", "unknown"),
+            document.metadata.get("page", "unknown"),
+        )
+        return None
 
-#     docs = []
-#     for c in all_chunks:
-#         docs.append(Document(page_content=c))
+    document.page_content = content
 
-#     embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
-#     store = Chroma.from_documents(docs, embeddings)
+    logger.debug(
+        "Document content validated: source=%s, page=%s",
+        document.metadata.get("source", "unknown"),
+        document.metadata.get("page", "unknown"),
+    )
 
-#     print("index construit")
-#     return store
-
-
+    return document
 
 
+def load_docs():
+    settings = Settings()
+
+    path = verify_docs_path(settings.docs_dir)
+
+    loaders = [
+        DirectoryLoader(
+            path=path,
+            glob="**/*.md",
+            loader_cls=TextLoader,
+            loader_kwargs={"encoding": "utf-8"},
+            silent_errors=True,
+        ),
+        DirectoryLoader(
+            path=path,
+            glob="**/*.txt",
+            loader_cls=TextLoader,
+            loader_kwargs={"encoding": "utf-8"},
+            silent_errors=True,
+        ),
+        DirectoryLoader(
+            path=path,
+            glob="**/*.pdf",
+            loader_cls=PyPDFLoader,
+            silent_errors=True,
+        ),
+    ]
+
+    documents = []
+
+    for loader in loaders:
+        loaded_documents = loader.load()
+        for document in loaded_documents:
+            valid_document = check_document_content(document)
+
+            if valid_document is not None:
+                documents.append(valid_document)
+
+    if not documents:
+        logger.error(
+            "No valid document found in directory: %s",
+            settings.docs_dir,
+        )
+        raise ValueError(f"No valid document found in {settings.docs_dir}")
+
+    logger.info(
+        "%d valid document part(s) loaded from %s",
+        len(documents),
+        settings.docs_dir,
+    )
+    return documents

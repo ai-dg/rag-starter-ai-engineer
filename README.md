@@ -98,3 +98,10 @@ Fork ce repo (ou crée un repo à partir de son contenu) et travaille sur ta cop
 
 - Schemas.py -> limitees a 2000 chars pour les requetes demesurees, str_strip_whitespace pour transformer les whites spaces de " " a "". Cela permettra d'eviter des questions composees avec uniquement d'espaces.
 
+
+- Ingestion.py -> J'ai choisi langchain et langchain-community, il fournit des outils de split deja en place. cest le choix plus en commun. il trancher les frontieres naturelles dans une ordre de preferences, comme \n\n, et puis \n etc.. au lieu de trancher au caractere 500 sans regarder ce qu'il y a autour. Un defaut qui presentait l'ancien code.
+
+Pour les chunks, j'ai choisi 500 avec un overlap de 100. les documents presents dans docs possedent de paragraphes entre 315 - 448 caracteres, donc 500 les contient sans les couper la plupart du temps.
+
+Pas de temps pour traiter les formats non-supportes (.docx, etc.)
+Pas de temps pour tratier la limitation de taille des fichiers
