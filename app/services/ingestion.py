@@ -57,6 +57,10 @@ from langchain_community.document_loaders import (
     PyPDFLoader,
 )
 
+from langchain_openai import OpenAIEmbeddings
+from langchain_ollama import OllamaEmbeddings
+from langchain_chroma import Chroma
+
 from pathlib import Path
 import logging
 
@@ -171,3 +175,37 @@ def load_docs():
         settings.docs_dir,
     )
     return documents
+
+
+def get_embedding(settings: Settings):
+
+    if settings.llm_provider == "openai":
+        embedding = OpenAIEmbeddings(model=settings.embedding_model)
+        return embedding
+    if settings.llm_provider == "ollama":
+        embedding = OllamaEmbeddings(
+            model=settings.embedding_model_local, base_url=settings.ollama_base_url
+        )
+        return embedding
+
+    raise ValueError(f"Unsupported LLM provider: {settings.llm_provider}")
+
+
+def create_vector_store(chunks):
+    settings = Settings()
+
+    if not chunks:
+        raise ValueError("No chunks available for indexing")
+
+    embedding = get_embedding(settings)
+
+    vector_store = Chroma.from_documents(
+        documents=chunks, embedding=embedding, persist_directory=settings.chroma_dir
+    )
+    logger.info(
+        "%d chunks stored in Chroma at %s",
+        len(chunks),
+        settings.chroma_dir,
+    )
+
+    return vector_store

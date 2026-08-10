@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     chat_model_local: str | None = None
 
     docs_dir: str | None = None
+    chroma_dir: str | None = None
     chunk_size: int
     chunk_overlap: int
     top_k: int
@@ -65,8 +66,8 @@ class Settings(BaseSettings):
                 )
 
         if self.docs_dir is None:
-            raise ValueError(
-                "DOCS_DIR is mandatory"
-            )
+            raise ValueError("DOCS_DIR is mandatory")
+        if self.chroma_dir is None:
+            raise ValueError("CHROMA_DIR is mandatory")
 
         return self
