@@ -31,3 +31,12 @@ Depending on the Chroma method used, the returned value may be a relevance
 score, where a higher value is better, or a distance, where a lower value is
 better. The threshold comparison must follow the returned score type.
 """
+
+
+# def retrieve(question):
+#     results = vectorstore.similarity_search(question, k=TOP_K)
+#     context = ""
+#     for r in results:
+#         context = context + r.page_content + "\n\n"
+#     return context
+

@@ -5,6 +5,8 @@ WORKDIR /app
 
 # Better use of Docker cache, it accelerates the construction
 COPY pyproject.toml ./
+COPY app ./app
+COPY docs ./docs
 
 # Install without cache, the files during the install are not preserved 
 RUN pip install uv --no-cache-dir && \ 

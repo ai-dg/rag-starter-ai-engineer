@@ -90,8 +90,11 @@ Ce que le collègue avait lui-même noté avant de passer à autre chose :
 Fork ce repo (ou crée un repo à partir de son contenu) et travaille sur ta copie. Les modalités de rendu sont détaillées dans [CONSIGNES.md](CONSIGNES.md).
 
 
-# Ameliorations possibles
+# Arbitrages
 
 - Dependance d'une cle payante API, realiser les embeddings en local `qwen2.5-coder` pour remplacer le `text-embedding-3-small` et `gemma4` a la place de `gpt-4o-mini`. Ces changements cest pour avoir quelque chose de comparable au POC initiale.
 
-- Variables pydantic codees en dur, amelioration realisee dans config.py en liaison avec la variable d'environnement .env (DOCS_DIR, CHUNK_SIZE, TOP_K, EMBEDDING_MODEL, CHAT_MODEL, SYSTEM_PROMPT)
+- Variables pydantic codees en dur, amelioration realisee dans config.py en liaison avec la variable d'environnement .env (DOCS_DIR, CHUNK_SIZE, TOP_K, EMBEDDING_MODEL, CHAT_MODEL, SYSTEM_PROMPT). Verifications de chaque variables d'envionnement et une gestion propre des variables non-hardcoding
+
+- Schemas.py -> limitees a 2000 chars pour les requetes demesurees, str_strip_whitespace pour transformer les whites spaces de " " a "". Cela permettra d'eviter des questions composees avec uniquement d'espaces.
+

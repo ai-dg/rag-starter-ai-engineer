@@ -30,3 +30,34 @@ Important:
 The API coordinates the different components but should not contain the internal
 logic for document ingestion, vector search, or prompt construction.
 """
+
+from fastapi import APIRouter
+
+from app.schemas import HealthAnswer, QueryAnswer, QueryQuestion
+
+router = APIRouter()
+
+
+@router.get("/health", response_model=HealthAnswer)
+def health() -> HealthAnswer:
+    return HealthAnswer(status="ok")
+
+
+@router.post("/query", response_model=QueryAnswer)
+def query(payload: QueryQuestion) -> QueryAnswer:
+    return QueryAnswer(
+        answer="Not implemented yet",
+        context_found=False,
+    )
+
+
+
+
+# @app.post("/ask")
+# def ask(q: Question):
+#     print("question recue :", q.question)
+#     context = retrieve(q.question)
+#     answer = generate(q.question, context)
+#     print("reponse generee")
+#     return {"answer": answer}
+

@@ -6,8 +6,8 @@
 
 ## 1. Architecture (`app/`)
 - [ ] `main.py` : instancier FastAPI, monter le router.
-- [ ] `config.py` : centraliser les paramètres (modèles, chemins, taille de chunk, top_k, seuil...).
-- [ ] `schemas.py` : requêtes/réponses Pydantic.
+- [x] `config.py` : centraliser les paramètres (modèles, chemins, taille de chunk, top_k, seuil...).
+- [x] `schemas.py` : requêtes/réponses Pydantic.
 - [ ] `api/routes.py` : uniquement l'orchestration HTTP.
 - [ ] `services/ingestion.py`, `retrieval.py`, `generation.py` : logique métier.
 - [ ] Décider quoi faire de l'ancien `app.py` (garder en compat, ou supprimer).

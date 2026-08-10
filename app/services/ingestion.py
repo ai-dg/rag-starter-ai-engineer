@@ -50,3 +50,48 @@ This implementation improves the pipeline in four areas:
 """
 
 
+
+# def load_docs():
+#     print("chargement des documents...")
+#     texts = []
+#     files = glob.glob(DOCS_DIR + "/*.md")
+#     for f in files:
+#         content = open(f).read()
+#         texts.append(content)
+#         print("ok ->", f)
+#     print(f"{len(texts)} fichiers charges")
+#     return texts
+
+
+# def chunk_text(text):
+#     chunks = []
+#     i = 0
+#     while i < len(text):
+#         chunks.append(text[i:i + CHUNK_SIZE])
+#         i = i + CHUNK_SIZE
+#     return chunks
+
+
+# def build_index():
+#     texts = load_docs()
+
+#     all_chunks = []
+#     for t in texts:
+#         for c in chunk_text(t):
+#             all_chunks.append(c)
+
+#     print(f"{len(all_chunks)} chunks generes")
+
+#     docs = []
+#     for c in all_chunks:
+#         docs.append(Document(page_content=c))
+
+#     embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
+#     store = Chroma.from_documents(docs, embeddings)
+
+#     print("index construit")
+#     return store
+
+
+
+

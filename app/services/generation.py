@@ -20,3 +20,20 @@ Inputs:
 Output:
 - A generated answer grounded in the retrieved documents.
 """
+
+
+
+# def generate(question, context):
+#     prompt = f"""{SYSTEM_PROMPT}
+
+# Contexte :
+# {context}
+
+# Question : {question}
+
+# Reponse :"""
+
+#     response = llm.invoke(prompt)
+#     return response.content
+
+
