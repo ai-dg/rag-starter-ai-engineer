@@ -31,9 +31,14 @@ The API coordinates the different components but should not contain the internal
 logic for document ingestion, vector search, or prompt construction.
 """
 
+import logging
 from fastapi import APIRouter
 
 from app.schemas import HealthAnswer, QueryAnswer, QueryQuestion
+from app.services.retrieval import retrieve
+from app.services.generation import generate
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -45,19 +50,29 @@ def health() -> HealthAnswer:
 
 @router.post("/query", response_model=QueryAnswer)
 def query(payload: QueryQuestion) -> QueryAnswer:
-    return QueryAnswer(
-        answer="Not implemented yet",
-        context_found=False,
+    logger.info("Query recieved: %r", payload.question)
+
+    retrieval_result = retrieve(payload.question)
+
+    logger.info(
+        "Retrieval done: context_found=%s " "best_score=%s",
+        retrieval_result["context_found"],
+        retrieval_result["best_score"],
     )
 
+    if not retrieval_result["context_found"]:
+        return QueryAnswer(
+            answer="Je ne peux pas répondre à partir des documents disponibles.",
+            sources=[],
+            context_found=False,
+        )
 
+    generation_result = generate(payload.question, retrieval_result)
 
+    logger.info("Generation done: %d source(s)", len(generation_result["sources"]))
 
-# @app.post("/ask")
-# def ask(q: Question):
-#     print("question recue :", q.question)
-#     context = retrieve(q.question)
-#     answer = generate(q.question, context)
-#     print("reponse generee")
-#     return {"answer": answer}
-
+    return QueryAnswer(
+        answer=generation_result["answer"],
+        sources=generation_result["sources"],
+        context_found=True,
+    )

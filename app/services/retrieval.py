@@ -32,11 +32,28 @@ score, where a higher value is better, or a distance, where a lower value is
 better. The threshold comparison must follow the returned score type.
 """
 
+from app.services.ingestion import load_docs, chunk_text, create_vector_store
+from app.config import Settings
 
-# def retrieve(question):
-#     results = vectorstore.similarity_search(question, k=TOP_K)
-#     context = ""
-#     for r in results:
-#         context = context + r.page_content + "\n\n"
-#     return context
+SEUIL = 0.9
 
+vector_store = create_vector_store(chunk_text(load_docs()))
+
+
+def retrieve(question):
+    settings = Settings()
+
+    results = vector_store.similarity_search_with_score(question, k=settings.top_k)
+
+    if not results:
+        result = {"chunks": [], "context_found": False, "best_score": None}
+        return result
+
+    best_score = results[0][1]
+
+    if best_score > SEUIL:
+        result = {"chunks": [], "context_found": False, "best_score": best_score}
+        return result
+
+    result = {"chunks": results, "context_found": True, "best_score": best_score}
+    return result

@@ -21,19 +21,49 @@ Output:
 - A generated answer grounded in the retrieved documents.
 """
 
+from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
+
+from app.config import Settings
 
 
-# def generate(question, context):
-#     prompt = f"""{SYSTEM_PROMPT}
+def get_chat_model(settings: Settings):
+    if settings.llm_provider == "openai":
+        model = ChatOpenAI(
+            model=settings.chat_model,
+            temperature=0,
+        )
+        return model
+    if settings.llm_provider == "ollama":
+        model = ChatOllama(
+            model=settings.chat_model_local,
+            base_url=settings.ollama_base_url,
+            temperature=0,
+        )
+        return model
+    raise ValueError(f"Unsupporteed LLM provider: {settings.llm_provider}")
 
-# Contexte :
-# {context}
 
-# Question : {question}
+def generate(question: str, retrieval_result: dict):
+    settings = Settings()
+    llm = get_chat_model(settings)
 
-# Reponse :"""
+    documents = [doc for doc, _score in retrieval_result["chunks"]]
 
-#     response = llm.invoke(prompt)
-#     return response.content
+    context = "\n\n".join(doc.page_content for doc in documents)
+    sources = list({doc.metadata.get("source") for doc in documents})
 
+    prompt = f"""{settings.system_prompt}
+    Réponds UNIQUEMENT à partir du contexte ci-dessous. Si le contexte ne contient
+    pas la réponse, dis que tu ne sais pas.
 
+    Contexte :
+    {context}
+
+    Question: {question}
+
+    Réponse :"""
+    answer = llm.invoke(prompt)
+
+    result = {"answer": answer.content, "sources": sources}
+    return result
