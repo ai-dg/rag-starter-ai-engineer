@@ -175,13 +175,7 @@ Chroma avec dossier persistant. L'index est recalculé à chaque démarrage
 J'ai choisi un seuil de similarité plutôt qu'un framework dédié (NeMo
 Guardrails, Guardrails AI, LLM Guard...) parce que c'était la méthode la
 plus rapide à mettre en œuvre et la plus simple à comprendre et à
-expliquer. Comme le rappelle Sébastien dans son email : « Un périmètre
-restreint mais assumé et documenté vaut mieux qu'un rendu large et
-superficiel. [...] on apprécie la transparence et la capacité à identifier
-ce qu'on ne maîtrise pas encore. » Je n'ai pas eu le temps d'évaluer ces
-frameworks et je l'assume : je ne les maîtrise pas encore, et un seuil sur
-le score de retrieval reste une solution simple, explicable, et suffisante
-pour ce périmètre.
+expliquer. 
 
 Après avoir réalisé des tests avec un retrieval basique, j'ai remarqué que
 les scores oscillaient entre 0.43 et 0.73 lorsque la question était en
@@ -193,11 +187,6 @@ considérée trop éloignée du contexte disponible pour qu'on y réponde.
 Le seuil est calibré pour le mode Ollama et non re-testé pour OpenAI, dont
 l'échelle de score est différente (0.68 observé en test, à comparer à un
 autre seuil que celui d'Ollama).
-
-Je ne connaissais pas la distinction entre score de similarité et score de
-distance en recherche vectorielle avant ce test — j'ai vérifié empiriquement
-sur mes propres données plutôt que de supposer, ce qui m'a évité d'inverser
-le sens de comparaison du guardrail.
 
 ## Dockerfile
 
